@@ -42,20 +42,33 @@
 
 
 //check a number is power of two or not
-
-
-function isPowerOfTwo(n){
-    if(n < 1){
-        return false;
-    }
-    while(n > 1){
-        if(n % 2 !== 0){
-            return false;
-        }
-        n = n / 2;
-    }
-    return true;
+// function isPowerOfTwo(n){
+//     if(n < 1){
+//         return false;
+//     }
+//     while(n > 1){
+//         if(n % 2 !== 0){
+//             return false;
+//         }
+//         n = n / 2;
+//     }
+//     return true;
    
-}
+// }
 
-console.log(isPowerOfTwo(14));
+// console.log(isPowerOfTwo(14));
+
+
+//hash map
+
+// let map = new Map();
+
+// map.set('a',1);
+// map.set('b',1);
+// map.set('c',3);
+// map.set("c",4);
+
+// console.log(map.size);
+// console.log(map.get("c"));
+
+// console.log(map);
