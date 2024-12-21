@@ -50,3 +50,25 @@
 // console.log(isPrime(1));
 
 //Big-O = O(sqrt(n))
+
+
+//check a number is power of two or not
+
+// function isPowerOfTwo(n) {
+//     if (n < 1) {
+//         return false;
+//     }
+//     while (n > 1) {
+//         if (n % 2 != 0) {
+//             return false;
+//         }
+//         n = n / 2;
+//     }
+//     return true;
+// }
+
+// console.log(isPowerOfTwo(5));
+
+
+//Big-O = O(log n);
+
