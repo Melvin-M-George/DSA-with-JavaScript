@@ -102,3 +102,18 @@
 
 //Big-O = O(n);
 
+//Linear seach
+
+// function linearSearch(arr,t){
+//     for(let i=0;i<arr.length;i++){
+//         if(arr[i] === t){
+//             return i;
+//         }
+//     }
+//     return -1;
+// }
+
+// let a = [1,2,3,4,5];
+// console.log(linearSearch(a,5));
+
+//Big-O = O(n)
