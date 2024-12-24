@@ -142,3 +142,59 @@
 
 //Big-O = O(log n)
 
+//Recursive Binary search 
+
+// function recursiveBinarySearch(arr,target){
+//     return search(arr,target,0,arr.length-1);
+// }
+
+
+// function search(arr,target,start,end){
+//     if(start > end){
+//         return -1;
+//     }
+//     let mid = Math.floor((start+ end)/2);
+//     if(target === arr[mid]){
+//         return mid;
+//     }
+//     if(target < arr[mid]){
+//         return search(arr,target,start,mid-1);
+//     }else{
+//         return search(arr,target,mid + 1, end);
+//     }
+// }
+
+
+// console.log(recursiveBinarySearch([-5,2,4,6,10],2));
+
+//Big-O = O(log n)
+
+
+//Linked list
+
+// class Node{
+//     constructor(value){
+//         this.value = value;
+//         this.next = null;
+//     }
+// }
+
+// class LinkedList{
+//     constructor(){
+//         this.head = null;
+//         this.size = 0;
+//     }
+
+//     isEmpty(){
+//         return this.size === 0;
+//     }
+
+//     getSize(){
+//         return this.size;
+//     }
+// }
+
+
+// const list = new LinkedList();
+// console.log("List is empty? :",list.isEmpty());
+// console.log("List size:",list.getSize());
