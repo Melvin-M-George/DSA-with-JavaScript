@@ -32,19 +32,33 @@ class LinkedList {
         this.size++;
     }
 
-    print() {
-        if (list.isEmpty()) {
+    print(){
+        if(list.isEmpty()){
             console.log("List is Empty");
-        } else {
+        }else{
             let curr = this.head;
             let listValues = "";
-            
+
             while(curr){
                 listValues += `${curr.value} `;
                 curr = curr.next;
             }
             console.log(listValues);
         }
+    }
+
+    append(value){
+        const node = new Node(value);
+        if(list.isEmpty()){
+            this.head = node;
+        }else{
+            let prev = this.head;
+            while(prev.next){
+                prev = prev.next;
+            }
+            prev.next = node;
+        }
+        this.size++;
     }
 }
 
@@ -53,9 +67,9 @@ const list = new LinkedList();
 console.log(list.isEmpty());
 console.log(list.getSize());
 list.print()
-list.prepend(19);
+list.append(19);
 list.print()
-list.prepend(22);
+list.append(22);
 list.print()
-list.prepend(33); 
+list.append(33); 
 list.print()
