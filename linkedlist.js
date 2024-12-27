@@ -120,6 +120,22 @@ class LinkedList {
         }
     }
 
+    search(value){
+        if(list.isEmpty()){
+            return -1;
+        }
+        let i=0;
+        let curr = this.head;
+        while(curr){
+            if(curr.value === value){
+                return i;
+            }
+            curr = curr.next;
+            i++;
+        }
+        return -1;
+    }
+
 
 
 }
@@ -130,5 +146,5 @@ console.log(list.getSize());
 list.insert(10, 0)
 list.insert(20, 1)
 list.insert(30, 1)
-console.log(list.removeValue(10));
 list.print();
+console.log(list.search(20));
