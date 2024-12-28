@@ -1,41 +1,41 @@
-class Node{
+class Node {
     constructor(value) {
         this.value = value;
         this.next = null;
     }
 }
 
-class LinkedList{
-    constructor(){
+class LinkedList {
+    constructor() {
         this.head = null;
         this.size = 0;
     }
 
-    isEmpty(){
+    isEmpty() {
         return this.size === 0;
     }
-    getSize(){
+    getSize() {
         return this.size;
     }
 
-    prepend(value){
+    prepend(value) {
         const node = new Node(value);
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             this.head = node;
-        }else{
+        } else {
             node.next = this.head;
             this.head = node;
         }
         this.size++;
     }
 
-    append(value){
+    append(value) {
         const node = new Node(value);
-        if(!this.head){
+        if (!this.head) {
             this.head = node;
-        }else{
+        } else {
             let prev = this.head;
-            while(prev.next){
+            while (prev.next) {
                 prev = prev.next;
             }
             prev.next = node;
@@ -43,17 +43,35 @@ class LinkedList{
         this.size++;
     }
 
-    print(){
-        if(!this.head){
+    print() {
+        if (!this.head) {
             console.log("List is empty");
-        }else{
+        } else {
             let curr = this.head;
             let arr = []
-            while(curr){
+            while (curr) {
                 arr.push(curr.value);
                 curr = curr.next;
             }
             console.log(arr);
+        }
+    }
+
+    insert(value, index) {
+        if (index < 0 || index > this.size) {
+            return;
+        }
+        if(index === 0){
+            this.prepend(value);
+        }else{
+            const node = new Node(value);
+            let prev = this.head;
+            for(let i=0;i<index-1;i++){
+                prev = prev.next;
+            }
+            node.next = prev.next;
+            prev.next = node;
+            this.size++;
         }
     }
 }
