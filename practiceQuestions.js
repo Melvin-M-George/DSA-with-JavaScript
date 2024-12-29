@@ -75,16 +75,16 @@ class LinkedList {
         }
     }
 
-    removeFrom(index){
-        if(index < 0 || index > this.size){
+    removeFrom(index) {
+        if (index < 0 || index > this.size) {
             return null;
         }
-        if(index === 0){
+        if (index === 0) {
             this.head = this.head.next;
-        }else{
+        } else {
             let removeNode;
             let prev = this.head;
-            for(let i=0;i<index-1;i++){
+            for (let i = 0; i < index - 1; i++) {
                 prev = prev.next;
             }
             removeNode = prev.next;
@@ -93,20 +93,20 @@ class LinkedList {
         this.size--;
     }
 
-    removeValue(value){
-        if(!this.head){
+    removeValue(value) {
+        if (!this.head) {
             return null;
         }
-        if(this.head.value === value){
+        if (this.head.value === value) {
             this.head = this.head.next;
             this.size--;
             return value;
-        }else{
+        } else {
             let prev = this.head;
-            while(prev.next && prev.next.value!=value){
+            while (prev.next && prev.next.value != value) {
                 prev = prev.next;
             }
-            if(prev.next){
+            if (prev.next) {
                 let removeNode = prev.next;
                 prev.next = removeNode.next;
                 this.size--;
@@ -115,6 +115,23 @@ class LinkedList {
             return null;
         }
     }
+
+    search(value) {
+        if(!this.head){
+            return -1;
+        }
+        let i=0;
+        let curr = this.head;
+        while(curr){
+            if(curr.value === value){
+                return i;
+            }
+            curr = curr.next;
+            i++;
+        }
+        return -1;
+    }
+
     
 }
 
