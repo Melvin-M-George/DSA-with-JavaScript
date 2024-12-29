@@ -61,12 +61,12 @@ class LinkedList {
         if (index < 0 || index > this.size) {
             return;
         }
-        if(index === 0){
+        if (index === 0) {
             this.prepend(value);
-        }else{
+        } else {
             const node = new Node(value);
             let prev = this.head;
-            for(let i=0;i<index-1;i++){
+            for (let i = 0; i < index - 1; i++) {
                 prev = prev.next;
             }
             node.next = prev.next;
@@ -74,6 +74,25 @@ class LinkedList {
             this.size++;
         }
     }
+
+    removeFrom(index){
+        if(index < 0 || index > this.size){
+            return null;
+        }
+        if(index === 0){
+            this.head = this.head.next;
+        }else{
+            let removeNode;
+            let prev = this.head;
+            for(let i=0;i<index-1;i++){
+                prev = prev.next;
+            }
+            removeNode = prev.next;
+            prev.next = removeNode.next;
+        }
+        this.size--;
+    }
+    
 }
 
 const list = new LinkedList();
