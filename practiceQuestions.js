@@ -143,10 +143,16 @@ class LinkedList {
         }
         this.head = prev;
     }
+
 }
 
-const list = new LinkedList();
-list.append(1);
-list.prepend(0);
-list.append(2);
-list.print();s
+//create a function to create a linkd list from an array
+
+// function linkedListFromArray(array){
+//     const list = new LinkedList();
+//     array.forEach(e => list.append(e));
+//     return list;
+// }
+// const linkedList = linkedListFromArray([11,22,33,44,55])
+// linkedList.print()
+
