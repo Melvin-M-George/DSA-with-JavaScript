@@ -156,3 +156,24 @@ class LinkedList {
 // const linkedList = linkedListFromArray([11,22,33,44,55])
 // linkedList.print()
 
+//write a function to find the length of a linked list;
+
+// const list = new LinkedList();
+// list.append(22);
+// list.prepend(11);
+// list.append(33);
+// list.print();
+
+// function findLength(list){
+//     let length = 0;
+//     let curr = list.head;
+//     while(curr){
+//         length++;
+//         curr = curr.next;
+//     }
+//     return length;
+// }
+
+// console.log(findLength(list));
+
+
