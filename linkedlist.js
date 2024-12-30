@@ -10,18 +10,18 @@ class LinkedList {
         this.head = null;
         this.size = 0;
     }
-
+    //function to check if a linked list is empty or not
     isEmpty() {
         return this.size === 0;
     }
+    //function to find the size of the linkedlist
     getSize() {
         return this.size;
     }
-
-
+    //function to add a node at the start of a linkedlist
     prepend(value) {
         const node = new Node(value);
-        if (this.isEmpty()) {
+        if (list.isEmpty()) {
             this.head = node;
         } else {
             node.next = this.head;
@@ -29,24 +29,10 @@ class LinkedList {
         }
         this.size++;
     }
-    print() {
-        if (list.isEmpty()) {
-            console.log("List is empty");
-        } else {
-            let curr = this.head;
-            let listValues = "";
-
-            while (curr) {
-                listValues += `${curr.value} `;
-                curr = curr.next;
-            }
-            console.log(listValues);
-        }
-    }
-
+    //function to add a node at the end of the linked list
     append(value) {
         const node = new Node(value);
-        if (list.isEmpty()) {
+        if (!this.head) {
             this.head = node;
         } else {
             let prev = this.head;
@@ -58,9 +44,24 @@ class LinkedList {
         this.size++;
     }
 
+    //function to print the values of a linked list as an array
+    print() {
+        if (!this.head) {
+            console.log("List is empty");
+        } else {
+            let curr = this.head;
+            let arr = []
+            while (curr) {
+                arr.push(curr.value);
+                curr = curr.next;
+            }
+            console.log(arr);
+        }
+    }
+    //function to insert a given value at a given index of a linkedlist
     insert(value, index) {
         if (index < 0 || index > this.size) {
-            return
+            return;
         }
         if (index === 0) {
             this.prepend(value);
@@ -75,16 +76,15 @@ class LinkedList {
             this.size++;
         }
     }
-
+    //function to remove a node at a given index of a linked list
     removeFrom(index) {
-        if (index < 0 || index >= this.size) {
+        if (index < 0 || index > this.size) {
             return null;
         }
-        let removeNode;
         if (index === 0) {
-            removeNode = this.head;
             this.head = this.head.next;
         } else {
+            let removeNode;
             let prev = this.head;
             for (let i = 0; i < index - 1; i++) {
                 prev = prev.next;
@@ -93,25 +93,23 @@ class LinkedList {
             prev.next = removeNode.next;
         }
         this.size--;
-        return removeNode.value;
-
     }
-
+    //function to remove a given value from an linked list
     removeValue(value) {
-        if (list.isEmpty()) {
+        if (!this.head) {
             return null;
         }
-        if(this.head.value === value){
+        if (this.head.value === value) {
             this.head = this.head.next;
             this.size--;
             return value;
-        }else{
+        } else {
             let prev = this.head;
-            while(prev.next && prev.next.value !== value){
+            while (prev.next && prev.next.value != value) {
                 prev = prev.next;
             }
-            if(prev.next){
-                const removeNode = prev.next;
+            if (prev.next) {
+                let removeNode = prev.next;
                 prev.next = removeNode.next;
                 this.size--;
                 return value;
@@ -119,9 +117,9 @@ class LinkedList {
             return null;
         }
     }
-
-    search(value){
-        if(list.isEmpty()){
+    //function to search for a value in a linked list
+    search(value) {
+        if(!this.head){
             return -1;
         }
         let i=0;
@@ -135,7 +133,7 @@ class LinkedList {
         }
         return -1;
     }
-
+    //function to reverse a linkedlist
     reverse(){
         let prev = null;
         let curr = this.head;
@@ -148,9 +146,136 @@ class LinkedList {
         this.head = prev;
     }
 
+    //Write a function to create a linkd list from an array
+    createListFromArray(array) {
+        array.forEach((e)=>list.append(e));    
+    }
 
+    //write a function to find the length of a linked list;
+    findLength(){
+        let length = 0;
+        let curr = this.head;
+        while(curr){
+            length++;
+            curr = curr.next;
+        }
+        return length;
+    }
+
+    //Write a function to check the linked list is empty or not
+    checkEmptyOrNot(){
+        return !this.head;
+    }
+    
+    //Write a function to find the middle node of a linked list.
+    findMiddleNode(){
+        let slow = this.head;
+        let fast = this.head;
+        while(fast && fast.next){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow.value;
+    }
+    
+    //Write a function to check if a linked list has a cycle.
+    checkCycleOrNot(){
+        let slow = this.head;
+        let fast = this.head;
+        while(fast && fast.next){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow === fast){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //function to create a circular linked list;
+    createCircular(){
+        if(!this.head){
+            console.log("List is empty");
+            return
+        }
+        let curr = this.head;
+        while(curr.next){
+            curr = curr.next;
+        }
+        curr.next = this.head;
+    }
+
+    //Write a function to remove duplicate values from a linked list.
+    removeDuplicates(){
+        let seen = new Set();
+        let prev = null;
+        let curr = this.head;
+        while(curr){
+            if(seen.has(curr.value)){
+                prev.next = curr.next;
+                list.size--;
+            }else{
+                seen.add(curr.value);
+                prev = curr;
+            }
+            curr = curr.next;
+        }
+    }
+
+    //Write a function to check if a value exists in the linked list or not
+    checkValue(value){
+        let curr = this.head;
+        while(curr){
+            if(curr.value === value){
+                return true;
+            }
+            curr = curr.next;
+        }
+        return false;
+    }
+
+    //Write a function to return the value at a specific index in the linked list.
+    findValueAtIndex(index){
+        if(index < 0 || index > this.size){
+            return null;
+        }
+        let curr = this.head;
+        for(let i=0;i<index;i++){
+            curr = curr.next;
+        }
+        return curr.value;
+    }
+
+    //Write a function to print the values of the linked list in reverse order (without reversing the list itself).
+    reversePrint(){
+        
+    }
 
 }
+
+const list = new LinkedList();
+list.append(11);
+list.append(22);
+list.append(33);
+list.append(44);
+list.append(55);
+console.log(list.findValueAtIndex(4));
+list.print()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //Tail implementation
