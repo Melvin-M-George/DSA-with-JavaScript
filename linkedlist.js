@@ -255,6 +255,66 @@ class LinkedList {
         console.log(curr.value);
     }
 
+    //Write a function to count the occurrences of a given value in the linked list.
+    count(value){
+        let count = 0;
+        let curr = this.head;
+        while(curr){
+            if(curr.value === value){
+                count++;
+            }
+            curr = curr.next;
+        }
+        return count;
+    }
+
+    //Write a function to remove duplicates from a sorted linked list.
+    removeSortedDuplicates(){
+        let curr = this.head;
+        while(curr && curr.next){
+            if(curr.value === curr.next.value){
+                curr.next = curr.next.next;
+                list.size--;
+            }else{
+                curr = curr.next;
+            }
+        }
+    }
+
+    //Write a function to find the value of the nth node from the end of the linked list.
+    findNthNodeFromEnd(n){
+        let first = this.head;
+        let second = this.head;
+        for(let i=0;i<n;i++){
+            if(!first){
+                return 
+            }
+            first = first.next;
+        }
+        while(first){
+            first = first.next;
+            second = second.next;
+        }
+        return second.value;
+    }
+
+    //Write a function to remove every kth node from the linked list.
+    removeEverykthNode(k){
+        let curr = this.head;
+        let prev = null;
+        let count = 1;
+        while(curr){
+            if(count % k === 0){
+                prev.next = curr.next;
+                list.size--;
+            }else{
+                prev = curr;
+            }
+            curr = curr.next;
+            count++;
+        }
+    }
+
 }
 
 const list = new LinkedList();
@@ -263,7 +323,7 @@ list.append(22);
 list.append(33);
 list.append(44);
 list.append(55);
-list.reversePrint(list.head)
+
 list.print()
 
 
