@@ -247,8 +247,12 @@ class LinkedList {
     }
 
     //Write a function to print the values of the linked list in reverse order (without reversing the list itself).
-    reversePrint(){
-        
+    reversePrint(curr){
+        if(!curr){
+            return
+        };
+        this.reversePrint(curr.next);
+        console.log(curr.value);
     }
 
 }
@@ -259,7 +263,7 @@ list.append(22);
 list.append(33);
 list.append(44);
 list.append(55);
-console.log(list.findValueAtIndex(4));
+list.reversePrint(list.head)
 list.print()
 
 
