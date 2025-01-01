@@ -213,7 +213,7 @@ class LinkedList {
         while(curr){
             if(seen.has(curr.value)){
                 prev.next = curr.next;
-                list.size--;
+                this.size--;
             }else{
                 seen.add(curr.value);
                 prev = curr;
@@ -274,7 +274,7 @@ class LinkedList {
         while(curr && curr.next){
             if(curr.value === curr.next.value){
                 curr.next = curr.next.next;
-                list.size--;
+                this.size--;
             }else{
                 curr = curr.next;
             }
@@ -314,6 +314,7 @@ class LinkedList {
             count++;
         }
     }
+    
 
 }
 
