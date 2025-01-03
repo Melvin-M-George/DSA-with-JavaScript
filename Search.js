@@ -1,17 +1,17 @@
 
 //Linear seach
 
-// function linearSearch(arr,t){
-//     for(let i=0;i<arr.length;i++){
-//         if(arr[i] === t){
-//             return i;
-//         }
-//     }
-//     return -1;
-// }
+function linearSearch(arr,t){
+    for(let i=0;i<arr.length;i++){
+        if(arr[i] === t){
+            return i;
+        }
+    }
+    return -1;
+}
 
-// let a = [1,2,3,4,5];
-// console.log(linearSearch(a,5));
+let a = [1,2,3,4,5];
+console.log(linearSearch(a,5));
 
 //Big-O = O(n)
 
@@ -35,6 +35,6 @@ function binarySearch(arr,target){
     return -1;
 }
 
-console.log(binarySearch([-5,2,4,6,10],-5));
+// console.log(binarySearch([-5,2,4,6,10],-5));
 
 //Big-O = O(log n)
