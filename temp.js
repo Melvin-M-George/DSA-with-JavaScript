@@ -1,20 +1,18 @@
-function quickSort(arr){
-    if(arr.length < 2){
-        return arr;
-    }
-    let pivot = arr[arr.length-1];
-    let left = [];
-    let right = [];
-    for(let i=0;i<arr.length-1;i++){
-        if(arr[i] < pivot){
-            left.push(arr[i]);
-        }else{
-            right.push(arr[i]);
+function bubbleSort(arr) {
+    let swapped;
+    do {
+        swapped = false;
+        for (let i = 0; i < arr.length - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                let temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+                swapped = true;
+            }
         }
-    }
-    return [...quickSort(left), pivot, ...quickSort(right)];
+    }while(swapped)
 }
 
-
 const arr = [33,11,22,55,44];
-console.log(quickSort(arr));
+bubbleSort(arr);
+console.log(arr);
