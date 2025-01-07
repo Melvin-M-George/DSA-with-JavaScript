@@ -1,33 +1,39 @@
 class Queue{
     constructor(){
-        this.items = [];
-    }
-
-    isEmpty(){
-        return this.items.length === 0;
-    }
-
-    size(){
-        return this.items.length;
+        this.items = {};
+        this.rear = 0;
+        this.front = 0;
     }
 
     enqueue(element){
-        this.items.push(element);
+        this.items[this.rear] = element;
+        this.rear++;
+    }
+    
+    dequeue(){
+        const item = this.items[this.front];
+        delete this.items[this.front];
+        this.front++;
+        return item;
     }
 
-    dequeue(){
-        return this.items.shift();
+    isEmpty(){
+        return this.rear - this.front === 0;
+    }
+
+    size(){
+        return this.rear - this.front;
     }
 
     peek(){
-        if(this.isEmpty()) return "Queue is empty";
-        return this.items[0];
+        return this.items[this.front];
     }
 
     print(){
-        if(this.isEmpty()) return "Queue is empty";
         return this.items;
     }
+
+
 
 
 }
@@ -37,6 +43,7 @@ queue.enqueue(11);
 queue.enqueue(22);
 queue.enqueue(33);
 queue.enqueue(44);
-queue.dequeue();
+queue.dequeue()
+
 console.log(queue.peek());
 console.log(queue.print());
