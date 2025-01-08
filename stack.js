@@ -36,9 +36,64 @@ class Stack{
     printStack(){
         return this.items;
     }
+
+    //Write a function that takes a string and uses a stack to reverse it.
+    reverseString(string){
+        for(let char of string){
+            this.items.push(char);
+        }
+        let reversed = "";
+        while(!this.isEmpty()){
+            reversed += this.items.pop();
+        }
+        return reversed;
+    }
+
+    //Write a function to check if an expression has balanced parentheses using a stack.
+    validParentheses(parentheses){
+        let obj = {
+            ")":"(", 
+            "}":"{",
+            "]":"["
+        }
+
+        for(let i of parentheses){
+            if(i === "(" || i==="{" || i==="["){
+                this.items.push(i);
+            }else if(i===")" || i==="}" || i==="]"){
+                if(this.items.length === 0 || this.items.pop() !== obj[i]){
+                    return false;
+                }
+            }
+        }
+        return this.items.length === 0;
+    }
+    
+    //Write a function to sort a stack 
+    sort(stack){
+        let tempstack = [];
+
+        while(stack.length > 0){
+            let top = stack.pop();
+
+            while(tempstack.length > 0 &&  tempstack[tempstack.length-1] > top){
+                stack.push(tempstack.pop());
+            }
+            tempstack.push(top);
+        }
+        
+        while(tempstack.length > 0){
+            stack.push(tempstack.pop())
+        }
+
+        return stack;
+    }
+    
+    
 }
 
-// const stack  = new Stack();
+const stack  = new Stack();
+console.log(stack.sort([22,44,33,11,55]));
 // stack.push(11);
 // stack.push(22);
 // stack.push(33);
@@ -51,47 +106,47 @@ class Stack{
 
 //Implementation of stack using linked list
 
-class Node{
-    constructor(value){
-        this.value = value;
-        this.next = null;
-    }
-}
+// class Node{
+//     constructor(value){
+//         this.value = value;
+//         this.next = null;
+//     }
+// }
 
-class Stack1{
-    constructor(){
-        this.top = null;
-        this.size = 0;
-    }
+// class Stack1{
+//     constructor(){
+//         this.top = null;
+//         this.size = 0;
+//     }
 
-    isEmpty(){
-        return this.size === 0;
-    }
+//     isEmpty(){
+//         return this.size === 0;
+//     }
 
-    push(value){
-        const node = new Node(value);
-        node.next = this.top;
-        this.top = node;
-        this.size++;
-    }
+//     push(value){
+//         const node = new Node(value);
+//         node.next = this.top;
+//         this.top = node;
+//         this.size++;
+//     }
 
-    pop(){
-        if(this.isEmpty()){
-            return "Stack is empty";
-        }
-        const poppedValue = this.top.value;
-        this.top = this.top.next;
-        this.size--;
-        return poppedValue;
-    }
+//     pop(){
+//         if(this.isEmpty()){
+//             return "Stack is empty";
+//         }
+//         const poppedValue = this.top.value;
+//         this.top = this.top.next;
+//         this.size--;
+//         return poppedValue;
+//     }
 
-    peek(){
-        if(this.isEmpty()) return "stack is empty";
-        return this.top.value;
-    } 
-}
+//     peek(){
+//         if(this.isEmpty()) return "stack is empty";
+//         return this.top.value;
+//     } 
+// }
 
-const stack = new Stack1();
-stack.push(11);
-stack.push(22);
-stack.push(33);
+// const stack = new Stack1();
+// stack.push(11);
+// stack.push(22);
+// stack.push(33);
