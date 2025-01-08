@@ -1,49 +1,21 @@
-class Queue{
-    constructor(){
-        this.items = {};
-        this.rear = 0;
-        this.front = 0;
+function quickSort(arr){
+    if(arr.length < 2){
+        return arr;
+    }
+    let pivot = arr[arr.length-1];
+    let left = [];
+    let right = [];
+    for(let i=0;i<arr.length-1;i++){
+        if(arr[i] < pivot){
+            left.push(arr[i]);
+        }else{
+            right.push(arr[i]);
+        }
     }
 
-    enqueue(element){
-        this.items[this.rear] = element;
-        this.rear++;
-    }
-    
-    dequeue(){
-        const item = this.items[this.front];
-        delete this.items[this.front];
-        this.front++;
-        return item;
-    }
-
-    isEmpty(){
-        return this.rear - this.front === 0;
-    }
-
-    size(){
-        return this.rear - this.front;
-    }
-
-    peek(){
-        return this.items[this.front];
-    }
-
-    print(){
-        return this.items;
-    }
-
-
-
-
+    return [...quickSort(left), pivot, ...quickSort(right)];
 }
 
-const queue = new Queue();
-queue.enqueue(11);
-queue.enqueue(22);
-queue.enqueue(33);
-queue.enqueue(44);
-queue.dequeue()
 
-console.log(queue.peek());
-console.log(queue.print());
+const arr = [33,22,11,55,44];
+console.log(quickSort(arr));
