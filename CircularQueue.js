@@ -72,4 +72,6 @@ queue.enqueue(55);
 console.log(queue.isFull());
 queue.dequeue()
 console.log(queue.peek());
+queue.enqueue(66)
+queue.enqueue(77)
 queue.print()
