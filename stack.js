@@ -2,98 +2,99 @@
 
 //Implementation of Stack using array
 
-class Stack{
-    constructor(){
+class Stack {
+    constructor() {
         this.items = [];
     }
-    
-    isEmpty(){
+
+    isEmpty() {
         return this.items.length === 0;
     }
 
-    push(element){
+    push(element) {
         this.items.push(element);
     }
 
-    pop(){
-        if(this.items.length === 0){
+    pop() {
+        if (this.items.length === 0) {
             return "Stack is Empty";
         }
         return this.items.pop();
     }
 
-    peek(){
-        if(this.isEmpty()){
+    peek() {
+        if (this.isEmpty()) {
             return "Stack is Empty";
         }
-        return this.items[this.items.length-1];
+        return this.items[this.items.length - 1];
     }
 
-    size(){
+    size() {
         return this.items.length;
     }
 
-    printStack(){
+    printStack() {
         return this.items;
     }
 
     //Write a function that takes a string and uses a stack to reverse it.
-    reverseString(string){
-        for(let char of string){
+    reverseString(string) {
+        for (let char of string) {
             this.items.push(char);
         }
         let reversed = "";
-        while(!this.isEmpty()){
+        while (!this.isEmpty()) {
             reversed += this.items.pop();
         }
         return reversed;
     }
 
     //Write a function to check if an expression has balanced parentheses using a stack.
-    validParentheses(parentheses){
-        let obj = {
-            ")":"(", 
-            "}":"{",
-            "]":"["
-        }
+    validParentheses(string) {
+        let stack = [];
 
-        for(let i of parentheses){
-            if(i === "(" || i==="{" || i==="["){
-                this.items.push(i);
-            }else if(i===")" || i==="}" || i==="]"){
-                if(this.items.length === 0 || this.items.pop() !== obj[i]){
+        for (let i of string) {
+            if (i === "(" || i === "{" || i === "[") {
+                stack.push(i);
+            } else {
+                if (stack.length === 0) {
+                    return false;
+                }
+                let top = stack.pop();
+                if (i === ")" && top !== "(" || i === "}" && top !== "{" || i === "]" && top != "[") {
                     return false;
                 }
             }
         }
-        return this.items.length === 0;
+
+        return stack.length === 0;
     }
-    
+
     //Write a function to sort a stack 
-    sort(stack){
+    sort(stack) {
         let tempstack = [];
 
-        while(stack.length > 0){
+        while (stack.length > 0) {
             let top = stack.pop();
 
-            while(tempstack.length > 0 &&  tempstack[tempstack.length-1] > top){
+            while (tempstack.length > 0 && tempstack[tempstack.length - 1] > top) {
                 stack.push(tempstack.pop());
             }
             tempstack.push(top);
         }
-        
-        while(tempstack.length > 0){
+
+        while (tempstack.length > 0) {
             stack.push(tempstack.pop())
         }
 
         return stack;
     }
-    
-    
+
+
 }
 
-const stack  = new Stack();
-console.log(stack.sort([22,44,33,11,55]));
+const stack = new Stack();
+console.log(stack.sort([22, 44, 33, 11, 55]));
 // stack.push(11);
 // stack.push(22);
 // stack.push(33);
@@ -143,7 +144,7 @@ console.log(stack.sort([22,44,33,11,55]));
 //     peek(){
 //         if(this.isEmpty()) return "stack is empty";
 //         return this.top.value;
-//     } 
+//     }
 // }
 
 // const stack = new Stack1();
