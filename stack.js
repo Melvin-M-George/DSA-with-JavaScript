@@ -51,23 +51,20 @@ class Stack {
 
     //Write a function to check if an expression has balanced parentheses using a stack.
     validParentheses(string) {
-        let stack = [];
-
-        for (let i of string) {
-            if (i === "(" || i === "{" || i === "[") {
-                stack.push(i);
-            } else {
-                if (stack.length === 0) {
+        for(let i of string){
+            if(i === "(" || i==="{" || i==="["){
+                this.items.push(i);
+            }else{
+                if(this.items.length === 0){
                     return false;
                 }
-                let top = stack.pop();
-                if (i === ")" && top !== "(" || i === "}" && top !== "{" || i === "]" && top != "[") {
+                let top = this.items.pop();
+                if(i===")" && top != "(" || i==="}" && top != "{" || i==="]" && top != "["){
                     return false;
                 }
             }
         }
-
-        return stack.length === 0;
+        return this.items.length === 0;
     }
 
     //Write a function to sort a stack 
@@ -107,45 +104,45 @@ console.log(stack.sort([22, 44, 33, 11, 55]));
 
 //Implementation of stack using linked list
 
-// class Node{
-//     constructor(value){
-//         this.value = value;
-//         this.next = null;
-//     }
-// }
+class Node{
+    constructor(value){
+        this.value = value;
+        this.next = null;
+    }
+}
 
-// class Stack1{
-//     constructor(){
-//         this.top = null;
-//         this.size = 0;
-//     }
+class Stack1{
+    constructor(){
+        this.top = null;
+        this.size = 0;
+    }
 
-//     isEmpty(){
-//         return this.size === 0;
-//     }
+    isEmpty(){
+        return this.size === 0;
+    }
 
-//     push(value){
-//         const node = new Node(value);
-//         node.next = this.top;
-//         this.top = node;
-//         this.size++;
-//     }
+    push(value){
+        const node = new Node(value);
+        node.next = this.top;
+        this.top = node;
+        this.size++;
+    }
 
-//     pop(){
-//         if(this.isEmpty()){
-//             return "Stack is empty";
-//         }
-//         const poppedValue = this.top.value;
-//         this.top = this.top.next;
-//         this.size--;
-//         return poppedValue;
-//     }
+    pop(){
+        if(this.isEmpty()){
+            return "Stack is empty";
+        }
+        const poppedValue = this.top.value;
+        this.top = this.top.next;
+        this.size--;
+        return poppedValue;
+    }
 
-//     peek(){
-//         if(this.isEmpty()) return "stack is empty";
-//         return this.top.value;
-//     }
-// }
+    peek(){
+        if(this.isEmpty()) return "stack is empty";
+        return this.top.value;
+    }
+}
 
 // const stack = new Stack1();
 // stack.push(11);
