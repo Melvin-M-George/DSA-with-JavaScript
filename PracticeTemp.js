@@ -62,15 +62,22 @@ class BinarySearchTree {
             this.preOrder(root.right);
         }
     }
+
+    inOrder(root){
+        if(root){
+            this.inOrder(root.left);
+            console.log(root.value);
+            this.inOrder(root.right);
+        }
+    }
 }
 
 const bst = new BinarySearchTree();
-bst.insert(11);
-bst.insert(22);
-bst.insert(33);
-bst.insert(11);
-bst.insert(11);
+bst.insert(10);
+bst.insert(5);
+bst.insert(15);
+bst.insert(3);
+bst.insert(7);
 
 
-
-bst.preOrder(bst.root);
+bst.inOrder(bst.root);
