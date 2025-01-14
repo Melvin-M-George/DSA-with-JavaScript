@@ -93,6 +93,18 @@ class BinarySearchTree{
             }
         }
     }
+
+    min(root){
+        if(!root.left){
+            return root.value;
+        }else{
+            return this.min(root.left);
+        }
+    }
+
+    max(root){
+        
+    }
 }
 
 const bst = new BinarySearchTree();
