@@ -5,6 +5,7 @@ class TrieNode{
     }
 }
 
+
 class Trie{
     constructor(){
         this.root = new TrieNode();
@@ -32,17 +33,17 @@ class Trie{
         return curr.isEndOfWord;
     }
 
-
     searchPrefix(prefix){
         let curr = this.root;
         for(let char of prefix){
             if(!curr.children[char]){
                 return false;
             }
-            curr =curr.children[char];
+            curr = curr.children[char];
         }
         return true;
     }
+
 }
 
 
