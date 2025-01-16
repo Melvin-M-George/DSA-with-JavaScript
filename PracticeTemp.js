@@ -1,60 +1,62 @@
-class TrieNode{
+class Graph{
     constructor(){
-        this.children = {};
-        this.isEndOfWord = false;
+        this.adjList = {};
+    }
+
+    addVertex(vertex){
+        if(!this.adjList[vertex]){
+            this.adjList[vertex] = new Set();
+        }
+    }
+
+    addEdge(vertex1, vertex2){
+        if(!this.adjList[vertex1]){
+            this.addVertex(vertex1);
+        }
+
+        if(!this.adjList[vertex2]){
+            this.addVertex(vertex2);
+        }
+
+        this.adjList[vertex1].add(vertex2);
+        this.adjList[vertex2].add(vertex1);
+    }
+
+    removeEdge(vertex1,vertex2){
+        this.adjList[vertex1].delete(vertex2);
+        this.adjList[vertex2].delete(vertex1);
+    }
+
+    removeVertex(vertex){
+        if(!this.adjList[vertex]){
+            return;
+        }
+        for(let adjVertex of this.adjList[vertex]){
+            this.removeEdge(vertex,adjVertex);
+        }
+        delete this.adjList[vertex]
+    }
+
+    hasEdge(vertex1,vertex2){
+        return this.adjList[vertex1].has(vertex2) &&
+        this.adjList[vertex2].has(vertex1);
+    }
+
+    display(){
+        for(let vertex in this.adjList){
+            console.log(vertex + "->" + [...this.adjList[vertex]]);
+        }
     }
 }
 
-class Trie{
-    constructor(){
-        this.root = new TrieNode();
-    }
+const graph = new Graph();
+graph.addVertex("A");
+graph.addVertex("B");
+graph.addVertex("C");
 
-    insert(word){
-        let curr = this.root;
-        for(let char of word){
-            if(!curr.children[char]){
-                curr.children[char] = new TrieNode();
-            }
-            curr = curr.children[char];
-        }
-        curr.isEndOfWord = true;
-    }
-
-    search(word){
-        let curr = this.root;
-        for(let char of word){
-            if(!curr.children[char]){
-                return false;
-            }
-            curr = curr.children[char];
-        }
-        return curr.isEndOfWord;
-    }
+graph.addEdge("A","B");
+graph.addEdge("B","C");
 
 
-    searchPrefix(prefix){
-        let curr = this.root;
-        for(let char of prefix){
-            if(!curr.children[char]){
-                return false;
-            }
-            curr =curr.children[char];
-        }
-        return true;
-    }
-}
 
-
-const trie = new Trie();
-
-trie.insert("apple");
-trie.insert("app");
-
-
-console.log(trie.search("apple")); // true
-console.log(trie.search("app"));   // true
-console.log(trie.search("ap"));    // false
-console.log(trie.searchPrefix("ap")); // true
-trie.insert("apricot");
-console.log(trie.searchPrefix("apr")); // true
+graph.display();
