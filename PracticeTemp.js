@@ -1,43 +1,111 @@
-class MinHeap{
-    constructor(){
-        this.heap = [];
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class BinarySearchTree {
+    constructor() {
+        this.root = null;
     }
 
-    getParentIndex(i){
-        return Math.floor((i-1)/2);
+    isEmpty() {
+        return this.root === null;
     }
 
-    getLeftChildIndex(i){
-        return (2*i) + 1;
+    insert(value) {
+        const node = new Node(value);
+        if (this.isEmpty()) {
+            this.root = node;
+        } else {
+            this.insertNode(this.root, node);
+        }
     }
 
-    getRightChildIndex(i){
-        return (2*i) + 2;
-    }
-
-    swap(i,j){
-        [this.heap[i],this.heap[j]] = [this.heap[j], this.heap[i]];
-    }
-
-    insert(value){
-        this.heap.push(value);
-        this.heapifyUp();
-    }
-
-    heapifyUp(){
-        let index = this.heap.length-1;
-        while(index > 0){
-            let parentIndex = this.getParentIndex(index);
-            if(this.heap[parentIndex] > this.heap[index]){
-                this.swap(parentIndex,index);
-                index = parentIndex;
-            }else{
-                break;
+    insertNode(root, node) {
+        if (node.value < root.value) {
+            if (root.left === null) {
+                root.left = node;
+            } else {
+                this.insertNode(root.left, node);
+            }
+        } else {
+            if (root.right === null) {
+                root.right = node;
+            } else {
+                this.insertNode(root.right, node);
             }
         }
     }
 
-    remove(){
-        
+    search(root, value) {
+        if (!root) {
+            return false;
+        } else {
+            if (value === root.value) {
+                return true;
+            } else if (value < root.value) {
+                return this.search(root.left, value);
+            } else {
+                return this.search(root.right, value);
+            }
+        }
+    }
+
+    preOrder(root) {
+        if (root) {
+            console.log(root.value);
+            this.preOrder(root.left);
+            this.preOrder(root.right);
+        }
+    }
+
+    inOrder(root) {
+        if (root) {
+            this.inOrder(root.left);
+            console.log(root.value);
+            this.inOrder(root.right);
+        }
+    }
+
+    postOrder(root) {
+        if (root) {
+            this.postOrder(root.left);
+            this.postOrder(root.right);
+            console.log(root.value);
+        }
+    }
+
+    levelOrder(){
+        const queue = [];
+        queue.push(this.root);
+        while(queue.length){
+            let curr = queue.shift();
+            console.log(curr.value);
+            if(curr.left){
+                queue.push(curr.left);
+            }
+            if(curr.right){
+                queue.push(curr.right);
+            }
+        }
+    }
+
+    min(root){
+        if(!root.left){
+            return root.value;
+        }else{
+            return this.min(root.left);
+        }
+    }
+
+    max(root){
+        if(!root.right){
+            return root.value;
+        }else{
+            return this.max(root.right);
+        }
     }
 }

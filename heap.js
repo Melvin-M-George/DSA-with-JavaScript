@@ -7,7 +7,7 @@ class MinHeap {
         return Math.floor((i-1)/2)
     }
 
-    getleftChildIndex(i){
+    getLeftChildIndex(i){
         return (2*i)+1
     }
 

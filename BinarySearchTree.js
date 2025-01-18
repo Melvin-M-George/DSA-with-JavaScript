@@ -44,7 +44,7 @@ class BinarySearchTree{
         if(!root){
             return false;
         }else{
-            if(root.value === value){
+            if(value === root.value){
                 return true;
             }else if(value < root.value){
                 return this.search(root.left, value);
