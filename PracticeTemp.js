@@ -1,77 +1,77 @@
-class Node {
-    constructor(value) {
+class Node{
+    constructor(value){
         this.value = value;
         this.left = null;
         this.right = null;
     }
 }
 
-class BinarySearchTree {
-    constructor() {
+class BinarySearchTree{
+    constructor(){
         this.root = null;
     }
 
-    isEmpty() {
+    isEmpty(){
         return this.root === null;
     }
 
-    insert(value) {
+    insert(value){
         const node = new Node(value);
-        if (this.isEmpty()) {
+        if(this.isEmpty()){
             this.root = node;
-        } else {
-            this.insertNode(this.root, node);
+        }else{
+            this.insertNode(this.root,node);
         }
     }
 
-    insertNode(root, node) {
-        if (node.value < root.value) {
-            if (root.left === null) {
+    insertNode(root,node){
+        if(node.value < root.value){
+            if(root.left === null){
                 root.left = node;
-            } else {
-                this.insertNode(root.left, node);
+            }else{
+                this.insertNode(root.left,node);
             }
-        } else {
-            if (root.right === null) {
+        }else{
+            if(root.right === null){
                 root.right = node;
-            } else {
-                this.insertNode(root.right, node);
+            }else{
+                this.insertNode(root.right,node);
             }
         }
     }
 
-    search(root, value) {
-        if (!root) {
+    search(root,value){
+        if(!root){
             return false;
-        } else {
-            if (value === root.value) {
+        }else{
+            if(value === root.value){
                 return true;
-            } else if (value < root.value) {
-                return this.search(root.left, value);
-            } else {
-                return this.search(root.right, value);
+            }else if(value < root.value){
+                return this.search(root.left,value);
+            }else{
+                return this.search(root.right,value);
             }
         }
     }
 
-    preOrder(root) {
-        if (root) {
+    preOrder(root){
+        if(root){
             console.log(root.value);
             this.preOrder(root.left);
             this.preOrder(root.right);
         }
     }
 
-    inOrder(root) {
-        if (root) {
+    inOrder(root){
+        if(root){
             this.inOrder(root.left);
             console.log(root.value);
             this.inOrder(root.right);
         }
     }
 
-    postOrder(root) {
-        if (root) {
+    postOrder(root){
+        if(root){
             this.postOrder(root.left);
             this.postOrder(root.right);
             console.log(root.value);
@@ -101,6 +101,7 @@ class BinarySearchTree {
         }
     }
 
+
     max(root){
         if(!root.right){
             return root.value;
@@ -108,4 +109,46 @@ class BinarySearchTree {
             return this.max(root.right);
         }
     }
+
+    delete(value){
+        this.root = this.deleteNode(this.root,value);
+    }
+
+    deleteNode(root,value){
+        if(root === null){
+            return root;
+        }
+
+        if(value < root.value){
+            root.left = this.deleteNode(root.left,value);
+        }else if(value > root.value){
+            root.right = this.deleteNode(root.right,value);
+        }else{
+            if(!root.left && !root.right){
+                return null;
+            }
+            if(!root.right){
+                return root.left;
+            }else if(!root.left){
+                return root.right;
+            }
+
+            root.value = this.min(root.right);
+            root.right = this.deleteNode(root.right,root.value);
+        }
+        return root;
+    }
 }
+
+
+const bst = new BinarySearchTree();
+
+bst.insert(33);
+bst.insert(11);
+bst.insert(55);
+bst.insert(44);
+bst.insert(22);
+
+bst.delete(11);
+bst.inOrder(bst.root)
+
