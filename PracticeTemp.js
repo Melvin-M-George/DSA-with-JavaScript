@@ -14,7 +14,7 @@ class Graph{
             this.addVertex(vertex1);
         }
         if(!this.adjList[vertex2]){
-            this.addVertex(vertex2);
+            this.adjList[vertex2];
         }
 
         this.adjList[vertex1].add(vertex2);
@@ -30,9 +30,8 @@ class Graph{
         if(!this.adjList[vertex]){
             return
         }
-
         for(let adjVertex of this.adjList[vertex]){
-            this.removeEdge(adjVertex,vertex);
+            this.removeEdge(vertex,adjVertex);
         }
 
         delete this.adjList[vertex];
@@ -50,6 +49,7 @@ class Graph{
     }
 }
 
+
 const graph = new Graph();
 graph.addVertex("A");
 graph.addVertex("B");
@@ -57,6 +57,7 @@ graph.addVertex("C");
 
 graph.addEdge("A","B");
 graph.addEdge("B","C");
+
 
 
 graph.display();
