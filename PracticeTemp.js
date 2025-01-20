@@ -1,63 +1,155 @@
-class Graph{
-    constructor(){
-        this.adjList = {};
-    }
-
-    addVertex(vertex){
-        if(!this.adjList[vertex]){
-            this.adjList[vertex] = new Set();
-        }
-    }
-
-    addEdge(vertex1,vertex2){
-        if(!this.adjList[vertex1]){
-            this.addVertex(vertex1);
-        }
-        if(!this.adjList[vertex2]){
-            this.adjList[vertex2];
-        }
-
-        this.adjList[vertex1].add(vertex2);
-        this.adjList[vertex2].add(vertex1);
-    }
-
-    removeEdge(vertex1,vertex2){
-        this.adjList[vertex1].delete(vertex2);
-        this.adjList[vertex2].delete(vertex1);
-    }
-
-    removeVertex(vertex){
-        if(!this.adjList[vertex]){
-            return
-        }
-        for(let adjVertex of this.adjList[vertex]){
-            this.removeEdge(vertex,adjVertex);
-        }
-
-        delete this.adjList[vertex];
-    }
-
-    hasEdge(vertex1,vertex2){
-        return this.adjList[vertex1].has(vertex2) &&
-        this.adjList[vertex2].has(vertex1);
-    }
-
-    display(){
-        for(let vertex in this.adjList){
-            console.log(vertex + "=>" + [...this.adjList[vertex]]);
-        }
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
     }
 }
 
 
-const graph = new Graph();
-graph.addVertex("A");
-graph.addVertex("B");
-graph.addVertex("C");
+class BinarySearchTree {
+    constructor() {
+        this.root = null;
+    }
 
-graph.addEdge("A","B");
-graph.addEdge("B","C");
+    isEmpty() {
+        return this.root === null;
+    }
+
+    insert(value) {
+        const node = new Node(value);
+        if (this.isEmpty()) {
+            this.root = node;
+        } else {
+            this.insertNode(this.root, node);
+        }
+    }
+
+    insertNode(root, node) {
+        if (node.value < root.value) {
+            if (root.left === null) {
+                root.left = node;
+            } else {
+                this.insertNode(root.left, node);
+            }
+        } else {
+            if (root.right === null) {
+                root.right = node;
+            } else {
+                this.insertNode(root.right, node);
+            }
+        }
+    }
+
+
+    search(root, value) {
+        if (!root) {
+            return false;
+        } else {
+            if (value === root.value) {
+                return true;
+            } else if (value < root.value) {
+                return this.search(root.left);
+            } else {
+                return this.search(root.right);
+            }
+        }
+    }
+
+    preOrder(root) {
+        if (root) {
+            console.log(root.value);
+            this.preOrder(root.left);
+            this.preOrder(root.right);
+        }
+    }
+
+    inOrder(root) {
+        if (root) {
+            this.inOrder(root.left);
+            console.log(root.value);
+            this.inOrder(root.right);
+        }
+    }
+
+    postOrder(root) {
+        if (root) {
+            this.postOrder(root.left);
+            this.postOrder(root.right);
+            console.log(root.value);
+        }
+    }
+
+    levelOrder() {
+        const queue = [];
+        queue.push(this.root);
+        while (queue.length) {
+            let curr = queue.shift();
+            console.log(curr.value);
+            if (curr.left) {
+                queue.push(curr.left);
+            }
+            if (curr.right) {
+                queue.push(curr.right);
+            }
+        }
+    }
+
+    min(root) {
+        if (!root.left) {
+            return root.value;
+        } else {
+            return this.min(root.left);
+        }
+    }
+
+    max(root) {
+        if (!root.right) {
+            return root.value;
+        } else {
+            return this.max(root.right);
+        }
+    }
+
+    delete(value) {
+        this.root = this.deleteNode(this.root, value);
+    }
+
+    deleteNode(root, value) {
+        if (root === null) {
+            return root;
+        }
+        if (value < root.value) {
+            root.left = this.deleteNode(root.left, value);
+        } else if (value > root.value) {
+            root.right = this.deleteNode(root.right, value);
+        } else {
+            if (!root.left && !root.right) {
+                return null;
+            }
+            if (!root.left) {
+                return root.right;
+            } else if (!root.right) {
+                return root.left;
+            }
+
+            root.value = this.min(root.right);
+            root.right = this.deleteNode(root.right, root.value);
+        }
+        return root;
+    }
+}
 
 
 
-graph.display();
+const bst = new BinarySearchTree();
+
+bst.insert(11);
+bst.insert(44);
+bst.insert(22);
+bst.insert(55);
+bst.insert(33);
+
+
+bst.delete(55)
+bst.levelOrder(bst.root);
