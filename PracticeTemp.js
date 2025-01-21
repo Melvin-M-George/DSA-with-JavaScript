@@ -1,59 +1,68 @@
-class TrieNode{
-    constructor(){
-        this.children = {};
-        this.isEndOfWord = false;
+class MinHeap {
+    constructor() {
+        this.heap = [];
+    }
+
+    getParentIndex(i) {
+        return Math.floor((i - 1) / 2);
+    }
+
+    getLeftChildIndex(i) {
+        return (2 * i) + 1;
+    }
+
+    getRightChildIndex(i) {
+        return (2 * i) + 2;
+    }
+
+    swap(i, j) {
+        [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
+    }
+
+    insert(value) {
+        this.heap.push(value);
+        this.heapifyUp();
+    }
+
+    heapifyUp(){
+        let index = this.heap.length-1;
+        while(index > 0){
+            let parentIndex = this.getParentIndex(index);
+            if(this.heap[parentIndex] > this.heap[index]){
+                this.swap(parentIndex,index);
+                index = parentIndex;
+            }else{
+                break;
+            }
+        }
+    }
+
+    remove(){
+        if(this.heap.length === 0){
+            return null;
+        }
+        if(this.heap.length === 1){
+            return this.heap.pop();
+        }
+        const root = this.heap[0];
+        this.heap[0] = this.heap.pop();
+        this.heapifyDown();
+        return root;
+    }
+
+    heapifyDown(){
+        let index = 0;
+        while(this.getLeftChildIndex(index) < this.heap.length){
+            let smallerChildIndex = this.getLeftChildIndex(index);
+            if(this.getRightChildIndex(index) < this.heap.length && this.heap[this.getRightChildIndex(index)] < this.heap[smallerChildIndex]){
+                smallerChildIndex = this.getRightChildIndex(index);
+            } 
+            if(this.heap[index] > this.heap[smallerChildIndex]){
+                this.swap(index,smallerChildIndex);
+                index = smallerChildIndex;
+            }else{
+                break;
+            }
+        }
     }
 }
-
-class Trie{
-    constructor(){
-        this.root = new TrieNode();
-    }
-
-    insert(word){
-        let curr = this.root;
-        for(let char of word){
-            if(!curr.children[char]){
-                curr.children[char]  = new TrieNode();
-            }
-            curr = curr.children[char];
-        }
-        curr.isEndOfWord = true;
-    }
-
-    search(word){
-        let curr = this.root;
-        for(let char of word){
-            if(!curr.children[char]){
-                return false;
-            }
-            curr = curr.children[char];
-        }
-        return curr.isEndOfWord;
-    }
-
-    searchPrefix(prefix){
-        let curr = this.root;
-        for(let char of prefix){
-            if(!curr.children[char]){
-                return false;
-            }
-            curr = curr.children[char];
-        }
-        return true;
-    }
-}
-
-const trie = new Trie();
-
-trie.insert("apple");
-trie.insert("app");
-
-
-console.log(trie.search("apple")); // true
-console.log(trie.search("app"));   // true
-console.log(trie.search("ap"));    // false
-console.log(trie.searchPrefix("ap")); // true
-trie.insert("apricot");
-console.log(trie.searchPrefix("apr")); // true
-

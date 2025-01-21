@@ -38,8 +38,12 @@ class MinHeap {
     }
 
     remove(){
-        if(this.heap.length === 0) return null;
-        if(this.heap.length === 1) return this.heap.pop();
+        if(this.heap.length === 0){
+            return null;
+        } 
+        if(this.heap.length === 1){
+            return this.heap.pop();
+        } 
         const root = this.heap[0];
         this.heap[0] = this.heap.pop()
         this.heapifyDown()
@@ -48,9 +52,10 @@ class MinHeap {
 
     heapifyDown(){
         let index = 0
-        while(this.getleftChildIndex(index) < this.heap.length){
-            let smallerChildIndex = this.getleftChildIndex(index);
-            if(this.getRightChildIndex(index) < this.heap.length && this.heap[this.getRightChildIndex(index)] < this.heap[smallerChildIndex]){
+        while(this.getLeftChildIndex(index) < this.heap.length){
+            let smallerChildIndex = this.getLeftChildIndex(index);
+            if(this.getRightChildIndex(index) < this.heap.length 
+            && this.heap[this.getRightChildIndex(index)] < this.heap[smallerChildIndex]){
                 smallerChildIndex = this.getRightChildIndex(index)
             }
             if(this.heap[index]>this.heap[smallerChildIndex]){
@@ -85,7 +90,7 @@ console.log(heap)
 //     }
 
 //     getLeftChildIndex(i){
-//         return (2*1) + 1;
+//         return (2*i) + 1;
 //     }
 
 //     getRightChildIndex(i){
