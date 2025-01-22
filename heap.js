@@ -70,14 +70,14 @@ class MinHeap {
 
 const heap = new MinHeap()
 
-heap.insert(10)
-heap.insert(20)
-heap.insert(50)
-heap.insert(2)
-heap.insert(150)
-heap.insert(0)
+heap.insert(11)
+heap.insert(22)
+heap.insert(33)
+heap.insert(55)
+heap.insert(66)
+heap.insert(44)
 
-console.log(heap)
+console.log(heap.heap)
 
 
 // class MaxHeap {

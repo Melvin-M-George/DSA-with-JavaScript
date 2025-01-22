@@ -137,6 +137,29 @@ class BinarySearchTree{
         }
         return root;
     }
+
+    isValidBST(){
+        return this.validate(this.root,-Infinity,Infinity);
+    }
+
+    validate(root,min,max){
+        if(root === null){
+            return true;
+        }   
+        if(root.value <= min || root.value >= max){
+            return false;
+        }
+
+        return this.validate(root.left,min,root.value) &&
+        this.validate(root.right,root.value,max);
+    }
+
+
+
+
+
+
+
 }
 
 const bst = new BinarySearchTree(); 

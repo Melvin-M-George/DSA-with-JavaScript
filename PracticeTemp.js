@@ -1,85 +1,175 @@
-class MinHeap {
-    constructor() {
-        this.heap = [];
-    }
-
-    getParentIndex(i) {
-        return Math.floor((i - 1) / 2);
-    }
-
-    getLeftChildIndex(i) {
-        return (2 * i) + 1;
-    }
-
-    getRightChildIndex(i) {
-        return (2 * i) + 2;
-    }
-
-    swap(i, j) {
-        [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
-    }
-
-
-    insert(value) {
-        this.heap.push(value);
-        this.heapifyUp();
-    }
-
-    heapifyUp() {
-        let index = this.heap.length - 1;
-        while (index > 0) {
-            let parentIndex = this.getParentIndex(index);
-            if (this.heap[parentIndex] > this.heap[index]) {
-                this.swap(parentIndex, index);
-                index = parentIndex;
-            } else {
-                break;
-            }
-        }
-    }
-
-    remove() {
-        if (this.heap.length === 0) {
-            return null;
-        }
-        if (this.heap.length === 1) {
-            return this.heap.pop();
-        }
-
-        const root = this.heap[0];
-        this.heap[0] = this.heap.pop();
-        this.heapifyDown();
-        return root;
-    }
-
-    heapifyDown() {
-        let index = 0;
-        while (this.getLeftChildIndex(index) < this.heap.length) {
-            let smallerChildIndex = this.getLeftChildIndex(index);
-            if (this.getRightChildIndex(index) > this.heap.length
-                && this.heap[this.getRightChildIndex(index) < this.heap[smallerChildIndex]]) {
-                smallerChildIndex = this.getRightChildIndex(index);
-            }
-            if(this.heap[index] > this.heap[smallerChildIndex]){
-                this.swap(index,smallerChildIndex);
-                index = smallerChildIndex;
-            }else{
-                break;
-            }
-        }
+class Node{
+    constructor(value){
+        this.value = value;
+        this.left = null;
+        this.right = null;
     }
 }
 
+class BinarySearchTree{
+    constructor(){
+        this.root = null;
+    }
 
-const heap = new MinHeap()
+    isEmpty(){
+        return this.root === null;
+    }
 
-heap.insert(11)
-heap.insert(22)
-heap.insert(33)
-heap.insert(44)
-heap.insert(55)
-heap.insert(66)
+    insert(value){
+        const node = new Node(value);
+        if(this.isEmpty()){
+            this.root = node;
+        }else{
+            this.insertNode(this.root,node);
+        }
+    }
 
-console.log(heap.remove());
+    insertNode(root,node){
+        if(node.value < root.value){
+            if(root.left === null){
+                root.left = node;
+            }else{
+                this.insertNode(root.left, node);
+            }
+        }else{
+            if(root.right === null){
+                root.right = node;
+            }else{
+                this.insertNode(root.right,node);
+            }
+        }
+    }
 
-console.log(heap)
+    search(root,value){
+        if(!root){
+            return false;
+        }else{
+            if(value === root.value){
+                return true;
+            }else if(value < root.value){
+                return this.search(root.left, value);
+            }else{
+                return this.search(root.right,value);
+            }
+        }
+    }
+
+    preOrder(root){
+        if(root){
+            console.log(root.value);
+            this.preOrder(root.left);
+            this.preOrder(root.right);
+        }
+    }
+    
+
+    inOrder(root){
+        if(root){
+            this.inOrder(root.left);
+            console.log(root.value);
+            this.inOrder(root.right);
+        }
+    }
+
+    postOrder(root){
+        if(root){
+            this.postOrder(root.left);
+            this.postOrder(root.right);
+            console.log(root.value);
+        }
+    }
+
+    levelOrder(){
+        const queue = [];
+        queue.push(this.root);
+        while(queue.length){
+            let curr = queue.shift();
+            console.log(curr.value);
+            if(curr.left){
+                queue.push(curr.left);
+            }
+            if(curr.right){
+                queue.push(curr.right);
+            }
+        }
+    }
+
+    min(root){
+        if(!root.left){
+            return root.value;
+        }else{
+            return this.min(root.left);
+        }
+    }
+
+    max(root){
+        if(!root.right){
+            return root.value;
+        }else{
+            return this.max(root.right); 
+        }
+    }
+
+    delete(value){
+        this.root = this.deleteNode(this.root,value);
+    }
+
+    deleteNode(root,value){
+        if(root === null){
+            return root;
+        }
+        if(value < root.value){
+            root.left = this.deleteNode(root.left,value);
+        }else if(value > root.value){
+            root.right = this.deleteNode(root.right, value);
+        }else{
+            if(!root.left && !root.right){
+                return null;
+            }
+            if(!root.left){
+                return root.right;
+            }else if(!root.right){
+                return root.left;
+            }
+
+            root.value = this.min(root.right);
+            root.right = this.deleteNode(root.right,root.value);
+        }
+        return root;
+    }
+
+    isValidBST(){
+        return this.validate(this.root,-Infinity,Infinity);
+    }
+
+    validate(root,min,max){
+        if(root === null){
+            return true;
+        }
+
+        if(root.value <= min || root.value >= max){
+            return false;
+        }
+        return this.validate(root.left,min,root.value) &&
+        this.validate(root.right,root.value,max);
+    }
+
+
+
+
+
+
+}
+
+const bst = new BinarySearchTree(); 
+
+bst.insert(10);
+bst.insert(5);
+bst.insert(15);
+bst.insert(3);
+
+
+
+bst.delete(10)
+bst.levelOrder();
+
