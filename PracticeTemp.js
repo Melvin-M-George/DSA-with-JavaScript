@@ -186,6 +186,24 @@ class BinarySearchTree {
     }
 
 
+    closest(target){
+        let curr = this.root;
+        let close = Infinity;
+        while(curr){
+            if(Math.abs(curr.value-target)< Math.abs(close-target)){
+                close = curr.value;
+            }
+            if(curr.value < target){
+                curr = curr.right;
+            }else if(curr.value > target){
+                curr = curr.left;
+            }else{
+                return curr.value;
+            }
+        }
+        return close;
+    }
+
     
 
 
@@ -202,6 +220,6 @@ bst.insert(3);
 
 
 
-bst.delete(10)
+
 bst.levelOrder();
 

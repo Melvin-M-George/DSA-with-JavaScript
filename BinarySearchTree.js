@@ -185,6 +185,43 @@ class BinarySearchTree{
     }
 
 
+    closest(target){
+        let curr = this.root;
+        let close = Infinity;
+        while(curr){
+            if(Math.abs(curr.value - target) < Math.abs(close-target)){
+                close = curr.value;
+            }
+            if(curr.value < target){
+                curr = curr.right;
+            }else if(curr.value > target){
+                curr = curr.left;
+            }else{
+                return curr.value;
+            }
+        }
+        return close;
+    }
+
+    balanced(root){
+        return this.isBalanced(root) !== -1
+    }
+
+    isBalanced(root){
+        if(root===null){
+            return 0
+        }
+
+        let leftHeight = this.isBalanced(root.left)
+        if(leftHeight === -1) return -1
+
+        let rightHeight = this.isBalanced(root.right)
+        if(rightHeight === -1) return -1
+
+        if(Math.abs(rightHeight - leftHeight) > 1) return -1 
+
+        return Math.max(leftHeight,rightHeight) + 1
+    }
 
 
 
