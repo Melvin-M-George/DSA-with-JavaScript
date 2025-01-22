@@ -155,6 +155,35 @@ class BinarySearchTree{
     }
 
 
+    maxDepth(root){
+        if(root===null){
+            return 0;
+        }
+        let leftHeight = this.maxDepth(root.left);
+        let rightHeight = this.maxDepth(root.right);
+
+        return Math.max(leftHeight,rightHeight) + 1;
+    }
+
+    secondLargest(root){
+        if(root === null){
+            return null;
+        }
+
+        let parent = null;
+        let curr = root;
+
+        while(curr.right){
+            parent = curr;
+            curr = curr.right;
+        }
+
+        if(curr.left){
+            return this.max(curr.left);
+        }
+        return parent.value;
+    }
+
 
 
 
