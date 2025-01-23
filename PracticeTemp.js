@@ -204,6 +204,32 @@ class BinarySearchTree {
         return close;
     }
 
+    balanced(root){
+        return this.isBalanced(root) !== -1;
+    }
+
+    isBalanced(root){
+        if(root === null){
+            return 0;
+        }
+
+        let leftHeight = this.isBalanced(root.left);
+        if(leftHeight === -1){
+            return -1;
+        } 
+
+        let rightHeight = this.isBalanced(root.right);
+        if(rightHeight === -1){
+            return -1;
+        }
+
+        if(Math.abs(rightHeight-leftHeight) > 1){
+            return -1;
+        }
+
+        return Math.max(leftHeight,rightHeight) + 1;
+    }
+
     
 
 
