@@ -55,7 +55,6 @@ class BinarySearchTree {
         }
     }
 
-
     preOrder(root) {
         if (root) {
             console.log(root.value);
@@ -95,7 +94,6 @@ class BinarySearchTree {
         }
     }
 
-
     min(root) {
         if (!root.left) {
             return root.value;
@@ -128,10 +126,10 @@ class BinarySearchTree {
             if (!root.left && !root.right) {
                 return null;
             }
-            if (!root.right) {
-                return root.left;
-            } else if (!root.left) {
+            if (!root.left) {
                 return root.right;
+            } else if (!root.right) {
+                return root.left;
             }
 
             root.value = this.min(root.right);
@@ -160,21 +158,20 @@ class BinarySearchTree {
         if (root === null) {
             return 0;
         }
-
         let leftHeight = this.maxDepth(root.left);
         let rightHeight = this.maxDepth(root.right);
 
         return Math.max(leftHeight, rightHeight) + 1;
     }
 
-    secondLargest(root) {
-        if (root === null) {
+
+    secondLargest() {
+        if (this.root === null) {
             return null;
         }
 
-        let curr = root;
+        let curr = this.root;
         let parent = null;
-
 
         while (curr.right) {
             parent = curr;
@@ -184,41 +181,59 @@ class BinarySearchTree {
         if (curr.left) {
             return this.max(curr.left);
         }
+        return parent.value;
     }
 
-    closest(target){
+    closest(target) {
         let curr = this.root;
         let close = Infinity;
-        while(curr){
-            if(Math.abs(curr.value - target) < Math.abs(close - target)){
+        while (curr) {
+            if (Math.abs(curr.value - target) < Math.abs(close - target)) {
                 close = curr.value;
             }
-            if(curr.value < target){
+            if (curr.value < target) {
                 curr = curr.right;
-            }else if(curr.value > target){
+            } else if (curr.value > target) {
                 curr = curr.left;
-            }else{
+            } else {
                 return curr.value;
             }
         }
         return close;
     }
-    
 
+    balanced(root){
+        return this.isBalanced(root) !== -1;
+    }
 
+    isBalanced(root){
+        if(root === null){
+            return 0;
+        }
+
+        let leftHeight = this.isBalanced(root.left);
+        if(leftHeight === -1){
+            return -1;
+        }
+
+        let rightHeight = this.isBalanced(root.right);
+        if(rightHeight === -1){
+            return -1;
+        }
+
+        if(Math.abs(rightHeight - leftHeight) > 1){
+            return -1;
+        }
+
+        return Math.max(rightHeight,leftHeight)+1;
+    }
 }
 
-
 const bst = new BinarySearchTree();
-
-
-
 bst.insert(11);
-bst.insert(44);
-bst.insert(22);
-bst.insert(55);
 bst.insert(33);
-
-console.log(bst.secondLargest(bst.root));
-
-
+bst.insert(22);
+bst.insert(44);
+bst.insert(55);
+bst.delete(11)
+bst.inOrder(bst.root)
