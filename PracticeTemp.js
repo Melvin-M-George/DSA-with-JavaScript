@@ -1,112 +1,78 @@
-class Graph {
-    constructor() {
-        this.adjList = {};
+class TrieNode{
+    constructor(){
+        this.children = {};
+        this.isEndOfWord = false;
+    }
+}
+
+class Trie{
+    constructor(){
+        this.root = new TrieNode();
     }
 
-    addVertex(vertex) {
-        if (!this.adjList[vertex]) {
-            this.adjList[vertex] = new Set();
-        }
-    }
-
-    addEdge(vertex1, vertex2) {
-        if (!this.adjList[vertex1]) {
-            this.addVertex(vertex1);
-        }
-        if (!this.adjList[vertex2]) {
-            this.addVertex(vertex2);
-        }
-
-        this.adjList[vertex1].add(vertex2);
-        this.adjList[vertex2].add(vertex1);
-    }
-
-    removeEdge(vertex1, vertex2) {
-        this.adjList[vertex1].delete(vertex2);
-        this.adjList[vertex2].delete(vertex1);
-    }
-
-    removeVertex(vertex) {
-        if (!this.adjList[vertex]) {
-            return
-        }
-
-        for (let adjVertex of this.adjList[vertex]) {
-            this.removeEdge(adjVertex, vertex);
-        }
-
-        delete this.adjList[vertex];
-    }
-
-    hasEdge(vertex1, vertex2) {
-        return this.adjList[vertex1].has(vertex2) &&
-            this.adjList[vertex2].has(vertex1);
-    }
-
-    display() {
-        for (let vertex in this.adjList) {
-            console.log(vertex + "=>" + [...this.adjList[vertex]]);
-        }
-    }
-
-    dfs(startVertex,visited = new Set(),result = []){
-        if(!this.adjList[startVertex]){
-            return [];
-        }
-
-        visited.add(startVertex);
-        result.push(startVertex);
-
-        for(let neighbor of this.adjList[startVertex]){
-            if(!visited.has(neighbor)){
-                this.dfs(neighbor,visited,result);
+    insert(word){
+        let curr = this.root;
+        for(let char of word){
+            if(!curr.children[char]){
+                curr.children[char] = new TrieNode();
             }
+            curr = curr.children[char];
         }
-
-        return result;
+        curr.isEndOfWord = true;
     }
 
-    bfs(startVertex){
-        if(!this.adjList[startVertex]){
-            return [];
-        }
-
-        let result = [];
-        let queue = [];
-        let visited = new Set();
-
-        queue.push(startVertex);
-        visited.add(startVertex);
-
-        while(queue.length){
-            let currVertex = queue.shift();
-            result.push(currVertex);
-
-            for(let neighbor of this.adjList[currVertex]){
-                if(!visited.has(neighbor)){
-                    visited.add(neighbor);
-                    queue.push(neighbor);
-                }
+    search(word){
+        let curr = this.root;
+        for(let char of word){
+            if(!curr.children[char]){
+                return false;
             }
+            curr = curr.children[char];
         }
-        return result;
+        return curr.isEndOfWord;
     }
+
+    searchPrefix(prefix){
+        let curr = this.root;
+        for(let char of prefix){
+            if(!curr.children[char]){
+                curr.children[char] = new TrieNode();
+            }
+            curr = curr.children[char];
+        }
+        return true;
+    }
+
+    longestPrefix(){
+        let curr = this.root;
+        let prefix = "";
+
+        while(curr){
+            const keys = Object.keys(curr.children);
+            if(keys.length !== 1 || curr.isEndOfWord){
+                break;
+            }
+
+            let char = keys[0];
+            prefix += char;
+            curr = curr.children[char];
+        }
+        return prefix;
+    }
+
     
-
-
 }
 
 
-const graph = new Graph();
-graph.addVertex("A");
-graph.addVertex("B");
-graph.addVertex("C");
+const trie = new Trie();
 
-graph.addEdge("A", "B");
-graph.addEdge("B", "C");
+trie.insert("apple");
+trie.insert("app");
 
 
-graph.display();
-
-
-console.log(graph.bfs("A"));
+console.log(trie.search("apple")); // true
+console.log(trie.search("app"));   // true
+console.log(trie.search("ap"));    // false
+console.log(trie.searchPrefix("ap")); // true
+trie.insert("apricot");
+console.log(trie.searchPrefix("apr")); // true
