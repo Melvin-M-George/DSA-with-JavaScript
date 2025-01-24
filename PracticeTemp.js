@@ -1,239 +1,112 @@
-class Node {
-    constructor(value) {
-        this.value = value;
-        this.left = null;
-        this.right = null;
-    }
-}
-
-
-class BinarySearchTree {
+class Graph {
     constructor() {
-        this.root = null;
+        this.adjList = {};
     }
 
-    isEmpty() {
-        return this.root === null;
-    }
-
-    insert(value) {
-        const node = new Node(value);
-        if (this.isEmpty()) {
-            this.root = node;
-        } else {
-            this.insertNode(this.root, node);
+    addVertex(vertex) {
+        if (!this.adjList[vertex]) {
+            this.adjList[vertex] = new Set();
         }
     }
 
-    insertNode(root, node) {
-        if (node.value < root.value) {
-            if (root.left === null) {
-                root.left = node;
-            } else {
-                this.insertNode(root.left, node);
-            }
-        } else {
-            if (root.right === null) {
-                root.right = node;
-            } else {
-                this.insertNode(root.right, node);
-            }
+    addEdge(vertex1, vertex2) {
+        if (!this.adjList[vertex1]) {
+            this.addVertex(vertex1);
+        }
+        if (!this.adjList[vertex2]) {
+            this.addVertex(vertex2);
+        }
+
+        this.adjList[vertex1].add(vertex2);
+        this.adjList[vertex2].add(vertex1);
+    }
+
+    removeEdge(vertex1, vertex2) {
+        this.adjList[vertex1].delete(vertex2);
+        this.adjList[vertex2].delete(vertex1);
+    }
+
+    removeVertex(vertex) {
+        if (!this.adjList[vertex]) {
+            return
+        }
+
+        for (let adjVertex of this.adjList[vertex]) {
+            this.removeEdge(adjVertex, vertex);
+        }
+
+        delete this.adjList[vertex];
+    }
+
+    hasEdge(vertex1, vertex2) {
+        return this.adjList[vertex1].has(vertex2) &&
+            this.adjList[vertex2].has(vertex1);
+    }
+
+    display() {
+        for (let vertex in this.adjList) {
+            console.log(vertex + "=>" + [...this.adjList[vertex]]);
         }
     }
 
-    search(root, value) {
-        if (!root) {
-            return false;
-        } else {
-            if (value === root.value) {
-                return true;
-            } else if (value < root.value) {
-                return this.search(root.left, value);
-            } else {
-                return this.search(root.right, value);
-            }
+    dfs(startVertex,visited = new Set(),result = []){
+        if(!this.adjList[startVertex]){
+            return [];
         }
-    }
 
-    preOrder(root) {
-        if (root) {
-            console.log(root.value);
-            this.preOrder(root.left);
-            this.preOrder(root.right);
-        }
-    }
+        visited.add(startVertex);
+        result.push(startVertex);
 
-    inOrder(root) {
-        if (root) {
-            this.inOrder(root.left);
-            console.log(root.value);
-            this.inOrder(root.right);
-        }
-    }
-
-    postOrder(root) {
-        if (root) {
-            this.postOrder(root.left);
-            this.postOrder(root.right);
-            console.log(root.value);
-        }
-    }
-
-    levelOrder() {
-        const queue = [];
-        queue.push(this.root);
-        while (queue.length) {
-            let curr = queue.shift();
-            console.log(curr.value);
-            if (curr.left) {
-                queue.push(curr.left);
-            }
-            if (curr.right) {
-                queue.push(curr.right);
+        for(let neighbor of this.adjList[startVertex]){
+            if(!visited.has(neighbor)){
+                this.dfs(neighbor,visited,result);
             }
         }
+
+        return result;
     }
 
-    min(root) {
-        if (!root.left) {
-            return root.value;
-        } else {
-            return this.min(root.left);
-        }
-    }
-
-    max(root) {
-        if (!root.right) {
-            return root.value;
-        } else {
-            return this.max(root.right);
-        }
-    }
-
-    delete(value) {
-        this.root = this.deleteNode(this.root, value);
-    }
-
-    deleteNode(root, value) {
-        if (root === null) {
-            return root;
-        }
-        if (value < root.value) {
-            root.left = this.deleteNode(root.left, value);
-        } else if (value > root.value) {
-            root.right = this.deleteNode(root.right, value);
-        } else {
-            if (!root.left && !root.right) {
-                return null;
-            }
-            if (!root.left) {
-                return root.right;
-            } else if (!root.right) {
-                return root.left;
-            }
-
-            root.value = this.min(root.right);
-            root.right = this.deleteNode(root.right, root.value);
-        }
-        return root;
-    }
-
-    isValidBST() {
-        return this.validate(this.root, -Infinity, Infinity);
-    }
-
-    validate(root, min, max) {
-        if (root === null) {
-            return true;
-        }
-        if (root.value <= min || root.value >= max) {
-            return false;
+    bfs(startVertex){
+        if(!this.adjList[startVertex]){
+            return [];
         }
 
-        return this.validate(root.left, min, root.value) &&
-            this.validate(root.right, root.value, max);
-    }
+        let result = [];
+        let queue = [];
+        let visited = new Set();
 
-    maxDepth(root) {
-        if (root === null) {
-            return 0;
-        }
-        let leftHeight = this.maxDepth(root.left);
-        let rightHeight = this.maxDepth(root.right);
+        queue.push(startVertex);
+        visited.add(startVertex);
 
-        return Math.max(leftHeight, rightHeight) + 1;
-    }
+        while(queue.length){
+            let currVertex = queue.shift();
+            result.push(currVertex);
 
-
-    secondLargest() {
-        if (this.root === null) {
-            return null;
-        }
-
-        let curr = this.root;
-        let parent = null;
-
-        while (curr.right) {
-            parent = curr;
-            curr = curr.right;
-        }
-
-        if (curr.left) {
-            return this.max(curr.left);
-        }
-        return parent.value;
-    }
-
-    closest(target) {
-        let curr = this.root;
-        let close = Infinity;
-        while (curr) {
-            if (Math.abs(curr.value - target) < Math.abs(close - target)) {
-                close = curr.value;
-            }
-            if (curr.value < target) {
-                curr = curr.right;
-            } else if (curr.value > target) {
-                curr = curr.left;
-            } else {
-                return curr.value;
+            for(let neighbor of this.adjList[currVertex]){
+                if(!visited.has(neighbor)){
+                    visited.add(neighbor);
+                    queue.push(neighbor);
+                }
             }
         }
-        return close;
+        return result;
     }
+    
 
-    balanced(root){
-        return this.isBalanced(root) !== -1;
-    }
 
-    isBalanced(root){
-        if(root === null){
-            return 0;
-        }
-
-        let leftHeight = this.isBalanced(root.left);
-        if(leftHeight === -1){
-            return -1;
-        }
-
-        let rightHeight = this.isBalanced(root.right);
-        if(rightHeight === -1){
-            return -1;
-        }
-
-        if(Math.abs(rightHeight - leftHeight) > 1){
-            return -1;
-        }
-
-        return Math.max(rightHeight,leftHeight)+1;
-    }
 }
 
-const bst = new BinarySearchTree();
-bst.insert(11);
-bst.insert(33);
-bst.insert(22);
-bst.insert(44);
-bst.insert(55);
-bst.delete(11)
-bst.inOrder(bst.root)
+
+const graph = new Graph();
+graph.addVertex("A");
+graph.addVertex("B");
+graph.addVertex("C");
+
+graph.addEdge("A", "B");
+graph.addEdge("B", "C");
+
+
+graph.display();
+
+
+console.log(graph.bfs("A"));

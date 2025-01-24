@@ -66,6 +66,56 @@ class Graph{
         }
     }
 
+    dfs(startVertex, visited = new Set(), result = []) {
+        if (!this.adjacencyList[startVertex]) {
+            return [];
+        }
+    
+        visited.add(startVertex); 
+        result.push(startVertex); 
+    
+        
+        for (let neighbor of this.adjacencyList[startVertex]) {
+            if (!visited.has(neighbor)) {
+                this.dfs(neighbor, visited, result);
+            }
+        }
+    
+        return result;
+    }
+
+
+    bfs(startVertex) {
+        if (!this.adjacencyList[startVertex]) {
+            return [];
+        }
+    
+        let result = []; 
+        let queue = []; 
+        let visited = new Set(); 
+    
+        queue.push(startVertex); 
+        visited.add(startVertex);
+    
+        while (queue.length) {
+            let currVertex = queue.shift();
+            result.push(currVertex);
+    
+            
+            for (let neighbor of this.adjacencyList[currVertex]) {
+                if (!visited.has(neighbor)) {
+                    visited.add(neighbor);
+                    queue.push(neighbor);
+                }
+            }
+        }
+    
+        return result;
+    }
+    
+    
+    
+
 }
 
 const graph = new Graph();
