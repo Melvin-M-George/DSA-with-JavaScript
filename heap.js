@@ -66,6 +66,22 @@ class MinHeap {
             }
         }
     }
+
+    heapSort(arr){
+        const minheap = new MinHeap();
+        let sorted = [];
+        
+        for (let val of arr) {
+            minheap.insert(val);
+        }
+        
+        while (minheap.heap.length) {
+            sorted.push(minheap.remove()); 
+        }
+        
+        return sorted;
+    }
+    
 }
 
 const heap = new MinHeap()

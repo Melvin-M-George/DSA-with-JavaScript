@@ -66,18 +66,6 @@ class Trie{
     }
 
     /**
-     * Helper function to collect all words in the Trie that start with a given prefix
-     */
-    collectAllWords(prefix, words, curr) {
-        if (curr.isEndOfWord) {
-            words.push(prefix);
-        }
-        for (let key in curr.children) {
-            this.collectAllWords(prefix + key, words, curr.children[key]);
-        }
-    }
-
-    /**
      * Returns all words in the Trie that start with a given prefix
      */
     autoComplete(prefix) {
@@ -94,6 +82,20 @@ class Trie{
         this.collectAllWords(prefix, words, curr);
         return words;
     }
+
+    /**
+     * Helper function to collect all words in the Trie that start with a given prefix
+     */
+    collectAllWords(prefix, words, curr) {
+        if (curr.isEndOfWord) {
+            words.push(prefix);
+        }
+        for (let key in curr.children) {
+            this.collectAllWords(prefix + key, words, curr.children[key]);
+        }
+    }
+
+    
 
 
 
